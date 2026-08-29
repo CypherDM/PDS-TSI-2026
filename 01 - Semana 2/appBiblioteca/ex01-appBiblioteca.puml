@@ -1,0 +1,30 @@
+@startuml diagrama de reserva de livro
+left to right direction
+
+' definição dos atores
+actor "Aluno" as aluno
+actor "Bibliotecário" as bibliotecario
+
+
+rectangle "Sistema da Biblioteca" {
+
+    usecase "Pesquisar livros" as UC1
+    usecase "Verificar disponibilidade" as UC2
+    usecase "Reservar livro" as UC3
+    usecase "Fazer login" as UC4
+    usecase "Registrar retirada" as UC5
+    usecase "Gerenciar estoque" as UC6
+    usecase "Registrar devolução" as UC7
+}
+
+Aluno --> UC1
+Aluno --> UC2
+Aluno --> UC3
+Aluno --> UC4
+
+UC3 ..> UC2 : <<include>>
+
+Bibliotecario --> UC4
+Bibliotecario --> UC6
+
+@enduml
