@@ -13,3 +13,8 @@
 * Linguagem do PlanUML para geração de diagramas;
 * Exercício 1;
 * Descrição de Casos de Uso.
+
+### Semana 3
+* Descrição textual de casos de uso;
+* Diagrama de sequência;
+* Formatação UML por mermaid.
