@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+
+actor "Cliente" as Cliente
+actor "Sistema BACEN" as BACEN
+
+rectangle "IFBankl - Área do Pix" {
+  usecase "Consultar Saldo" as UC1
+  usecase "Cadastrar Chave Pix" as UC2
+  usecase "Realizar Pix" as UC3
+  usecase "Autenticar Usuário" as UC4
+}
+
+Cliente --> UC1
+Cliente --> UC2
+Cliente --> UC3
+BACEN --> UC3 : valida chave
+
+UC1 --> UC4 : <<include>>
+UC2 --> UC4 : <<include>>
+UC3 --> UC4 : <<include>>
+@enduml

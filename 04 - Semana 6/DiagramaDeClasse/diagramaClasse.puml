@@ -1,0 +1,53 @@
+@startuml
+
+class Cliente {
+    - id: int
+    - nome: String
+    - cpf: String
+    - email: String
+    + autenticar(): boolean
+}
+
+class Conta {
+    - numero: String
+    - agencia: String
+    - saldo: double
+    + verificarSaldo(valor: double): boolean
+    + debitar(valor: double): boolean
+    + creditar(valor: double): void
+}
+
+class Transacao {
+    - valor: double
+    - data: Date
+    - tipo: String
+    + registrar(): void
+}
+
+class ChavePix {
+    - tipo: TipoChave
+    - valor: String
+    - dataCadastro: Date
+    - status: StatusChave
+    + ativar(): void
+    + desativar(): void
+}
+
+enum TipoChave {
+    CPF
+    CNPJ
+    EMAIL
+    TELEFONE
+    ALEATORIA
+}
+
+enum StatusChave {
+    ATIVA
+    INATIVA
+}
+
+Cliente "1" -- "1..*" Conta : possui
+Cliente "1" -- "0..*" ChavePix : cadastra
+Conta "1" -- "0..*" Transacao : registra
+
+@enduml

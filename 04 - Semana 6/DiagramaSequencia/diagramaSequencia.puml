@@ -1,0 +1,34 @@
+@startuml
+actor Cliente
+participant ":TelaPix" as Tela
+participant ":ControladorPix" as Controlador
+participant ":SistemaBACEN" as BACEN
+participant ":Transacao" as Transacao
+
+Cliente -> Tela : informarChave(chavePix)
+Tela -> Controlador : validarChave(chavePix)
+Controlador -> BACEN : consultarChave(chavePix)
+BACEN -> Controlador : dadosDestinatario
+Controlador -> Tela : exibirDestinatario(dados)
+
+Cliente -> Tela : informarValor(valor)
+Tela -> Controlador : realizarPix(chavePix, valor)
+
+Controlador -> Conta: verificarSaldo(valor)
+Conta --> Controlador : saldoDisponivel
+
+alt Saldo suficiente
+  Controlador -> Conta : debitar(valor)
+  Conta --> Controlador : débito realizado
+
+  Controlador -> Transacao : registrar(valor, data, "PIX")
+  Transacao --> Controlador : transacão registrada
+
+  Controlador -> Tela : gerarComprovante()
+  Tela --> Cliente : exibirComprovante()
+
+else Saldo insuficiente
+  Controlador -> Tela : informarSaldoInsuficiente()
+  Tela --> Cliente : exibirErro()
+end
+@enduml
