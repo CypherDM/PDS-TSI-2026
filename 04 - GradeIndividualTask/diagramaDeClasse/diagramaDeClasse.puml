@@ -1,0 +1,69 @@
+@startuml diagramaDeClasse
+skinparam classAttributeIconSize 0
+
+class Cliente {
+  - nome: String
+  + escolherProduto(qtd: int): void
+}
+
+class Atendente {
+  - nome: String
+  + registrarPedido(): Pedido
+  + receberPagamento(valor: double): Pagamento
+  + emitirComprovante(pedido: Pedido): Comprovante
+}
+
+class Gerente {
+  + cadastrarProduto(p: Produto): void
+  + alterarPreco(codigo: String, novoPreco: double): void
+  + atualizarEstoque(qtd: int): void
+  + removerProduto(codigo: String): void
+  + consultarVendas(): List
+}
+
+class Produto {
+  - codigo: String
+  - nome: String
+  - precoUnitario: double
+  - quantidadeEstoque: int
+  + temEstoqueSuficiente(qtd: int): boolean
+  + baixarEstoque(qtd: int): void
+}
+
+class Pedido {
+  - numero: int
+  - dataHora: DateTime
+  - status: String
+  + calcularTotal(): double
+  + finalizar(): void
+  + cancelar(): void
+}
+
+class ItemPedido {
+  - quantidade: int
+  - subtotal: double
+  + calcularSubtotal(): double
+}
+
+class Pagamento {
+  - forma: String
+  - valorPago: double
+  + ehSuficiente(total: double): boolean
+  + calcularTroco(total: double): double
+}
+
+class Comprovante {
+  - numero: int
+  - dataHora: DateTime
+  + gerarTexto(): String
+}
+
+Atendente <|-- Gerente
+
+Cliente "1" --> "0..*" Pedido : realiza
+Pedido "1" *-- "1..*" ItemPedido : itens
+ItemPedido "0..*" --> "1" Produto : produto
+Pedido "1" --> "0..1" Pagamento : quitadoPor
+Pedido "1" *-- "0..1" Comprovante : comprova
+
+@enduml
